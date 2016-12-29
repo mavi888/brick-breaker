@@ -32,8 +32,22 @@ var hitPaddle = function() {
   }
 };
 
+var drawBlocks = function() {
+  fill(222, 0, 107);
+  rect(0, 0, 100, 40);
+  fill(33, 0, 222);
+  rect(100, 0, 100, 40);
+  fill(0, 155, 222);
+  rect(200, 0, 100, 40);
+  fill(150, 2, 150);
+  rect(300, 0, 100, 40);
+  fill(255, 255, 255);
+};
+
 var draw = function() {
     background(241, 252, 234); // Draws the background all the time so the canvas is always clean
+
+    drawBlocks();
 
     //Make the ball bounce
     bounceBall();
