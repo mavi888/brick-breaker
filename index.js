@@ -1,25 +1,26 @@
 // Variables --------------------
 
-var ballXPosition = 50;
-var ballYPosition = 50;
-var ballRadius = 25;
-var ballXSpeed = random(15); // Defines the initial speed of the ball as a random number between 0 and 25.
-var ballYSpeed = random(15);
+var ballXPosition = 250;
+var ballYPosition = 250;
+var ballRadius = 20;
+var ballXSpeed = 7;
+var ballYSpeed = 7;
 
 var paddleWidth = 200;
 var paddleHeight = 20;
 var paddleYPosition = 370;
 
-var numberOfBlocks = 4;
+var numberOfBlocks = 5;
 var blockHeight = 40;
 var blockWidth = width / numberOfBlocks;
+var blocks = [];
 
 // Functions ---------------------
 
 var bounceBall = function() {
   //Make the ball bounce
   fill(255, 255, 255);
-  ellipse(ballXPosition, ballYPosition, 50,50);
+  ellipse(ballXPosition, ballYPosition, ballRadius * 2, ballRadius * 2);
   if(ballXPosition + ballRadius >= width || ballXPosition - ballRadius <= 0){
       ballXSpeed = ballXSpeed * -1; // Everytime we get to an edge it make the speed goes in the oposite direction.
   }
@@ -38,20 +39,35 @@ var hitPaddle = function() {
   }
 };
 
-var drawBlocks = function() {
+var hitBlocks = function() {
   // we are going to start with only one line of blocks
   for (var i = 0; i < numberOfBlocks; i++) {
-    fill(155 / i, 0, 122);
-    rect(i * blockWidth, 0, blockWidth, blockHeight);
+    // If the block is visible
+    if (blocks[i] === true) {
+      if ((ballYPosition - ballRadius < blockHeight) &&
+      (ballXPosition - ballRadius >= blockWidth * i) &&
+      (ballXPosition - ballRadius <= blockWidth * (i + 1))) {
+        blocks[i] = false;
+        ballYSpeed *= -1;
+      } else {
+        fill(155 / i, 0, 122);
+        rect(i * blockWidth, 0, blockWidth, blockHeight);
+      }
+    }
   }
-
-
 };
+
+// Main block of execution
+
+// Initalize blocks to the number of blocks
+for (var i = 0; i < numberOfBlocks; i++) {
+  blocks.push(true);
+}
 
 var draw = function() {
     background(241, 252, 234); // Draws the background all the time so the canvas is always clean
 
-    drawBlocks();
+    hitBlocks();
 
     //Make the ball bounce
     bounceBall();
