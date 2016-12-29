@@ -1,3 +1,10 @@
+var canvasWidth = 400;
+var canvasHeight = 400;
+
+void setup() {
+  size(canvasWidth, canvasHeight);
+}
+
 // Variables --------------------
 
 var ballXPosition = 250;
@@ -12,7 +19,7 @@ var paddleYPosition = 370;
 
 var numberOfBlocks = 5;
 var blockHeight = 40;
-var blockWidth = width / numberOfBlocks;
+var blockWidth = canvasWidth / numberOfBlocks;
 var blocks = [];
 
 // Functions ---------------------
@@ -21,10 +28,10 @@ var bounceBall = function() {
   //Make the ball bounce
   fill(255, 255, 255);
   ellipse(ballXPosition, ballYPosition, ballRadius * 2, ballRadius * 2);
-  if(ballXPosition + ballRadius >= width || ballXPosition - ballRadius <= 0){
+  if(ballXPosition + ballRadius >= canvasWidth || ballXPosition - ballRadius <= 0){
       ballXSpeed = ballXSpeed * -1; // Everytime we get to an edge it make the speed goes in the oposite direction.
   }
-  if(ballYPosition + ballRadius >= height || ballYPosition - ballRadius <= 0){
+  if(ballYPosition + ballRadius >= canvasHeight || ballYPosition - ballRadius <= 0){
       ballYSpeed = ballYSpeed * -1;
   }
 };
@@ -64,7 +71,7 @@ for (var i = 0; i < numberOfBlocks; i++) {
   blocks.push(true);
 }
 
-var draw = function() {
+void draw() {
     background(241, 252, 234); // Draws the background all the time so the canvas is always clean
 
     hitBlocks();
