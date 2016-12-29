@@ -3,9 +3,12 @@
 var ballXPosition = 50;
 var ballYPosition = 50;
 var ballRadius = 25;
+var ballXSpeed = random(15); // Defines the initial speed of the ball as a random number between 0 and 25.
+var ballYSpeed = random(15);
 
-var ballXSpeed = random(25); // Defines the initial speed of the ball as a random number between 0 and 25.
-var ballYSpeed = random(25);
+var paddleWidth = 200;
+var paddleHeight = 20;
+var paddleYPosition = 370;
 
 // Functions ---------------------
 
@@ -18,9 +21,15 @@ var bounceBall = function() {
   if(ballYPosition + ballRadius >= height || ballYPosition - ballRadius <= 0){
       ballYSpeed = ballYSpeed * -1;
   }
+};
 
-  ballYPosition = ballYPosition + ballYSpeed; // It will add the current speed (negative or possitive, to our current position making the ball to move)
-  ballXPosition = ballXPosition + ballXSpeed;
+var hitPaddle = function() {
+  rect(mouseX - (paddleWidth / 2), paddleYPosition, paddleWidth, paddleHeight);
+  if(((ballXPosition + ballRadius) > (mouseX - paddleWidth / 2)) &&
+    ((ballXPosition - ballRadius) < (mouseX + paddleWidth / 2)) &&
+    ((ballYPosition + ballRadius) > paddleYPosition)){
+      ballYSpeed = ballYSpeed * -1;
+  }
 };
 
 var draw = function() {
@@ -28,4 +37,11 @@ var draw = function() {
 
     //Make the ball bounce
     bounceBall();
+
+    //Draw paddle
+    hitPaddle();
+
+    //Change the ball position for next frame
+    ballYPosition = ballYPosition + ballYSpeed; // It will add the current speed (negative or possitive, to our current position making the ball to move)
+    ballXPosition = ballXPosition + ballXSpeed;
 };
